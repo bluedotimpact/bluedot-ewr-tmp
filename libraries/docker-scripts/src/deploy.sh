@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 APP_NAME=$(basename "$PWD")
-REPO_URL="sjc.vultrcr.com/bluedot"
+REPO_URL="ewr.vultrcr.com/bluedot20240228nj"
 IMAGE_NAME="bluedot-$APP_NAME"
 VERSION_TAG="$(TZ=UTC date +'%Y%m%d.%H%M%S').$(git rev-parse --short HEAD)"
 
@@ -20,6 +20,3 @@ docker push $REPO_URL/$IMAGE_NAME:latest
 # Restart nodes in cluster so they pull the new image
 # kubectl rollout restart deployment $IMAGE_NAME-deployment
 # kubectl rollout status deployment $IMAGE_NAME-deployment
-
-# Attempt to print docker logs
-journalctl -xu docker.service

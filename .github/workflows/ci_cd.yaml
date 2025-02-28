@@ -97,21 +97,14 @@ jobs:
       - name: Configure infra deployment
         if: steps.check_deployment.outputs.should_skip != 'true' && matrix.app == 'infra'
         run: |
-          echo "$INFRA_PULUMI_PASSPHRASE" > apps/infra/passphrase.prod.txt
-          mkdir -p ~/.aws
-          echo "$INFRA_AWS_CREDENTIALS" > ~/.aws/credentials
-        env:
-          INFRA_PULUMI_PASSPHRASE: ${{ secrets.INFRA_PULUMI_PASSPHRASE }}
-          INFRA_AWS_CREDENTIALS: ${{ secrets.INFRA_AWS_CREDENTIALS }}
+          echo "Not supported"
+          exit 1
 
       - name: Configure k8s deployment
         if: steps.check_deployment.outputs.should_skip != 'true' && matrix.app != 'infra'
         run: |
-          docker login https://sjc.vultrcr.com/bluedot -u dbaa58f3-01f1-4fcc-9c14-93cc28f524e0 -p $VULTR_CONTAINER_REGISTRY_PASSWORD
-          mkdir -p ~/.kube
-          echo "$K8S_KUBECONFIG" > ~/.kube/config
+          docker login https://ewr.vultrcr.com/bluedot20240228nj -u 0cdab27d-43ec-4a7c-a480-ae4f4ee20d8c -p $VULTR_CONTAINER_REGISTRY_PASSWORD
         env:
-          K8S_KUBECONFIG: ${{ secrets.K8S_KUBECONFIG }}
           VULTR_CONTAINER_REGISTRY_PASSWORD: ${{ secrets.VULTR_CONTAINER_REGISTRY_PASSWORD }}
 
       - name: Deploy
