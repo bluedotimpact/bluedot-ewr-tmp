@@ -13,9 +13,13 @@ docker build --platform="linux/amd64" -t $IMAGE_NAME --build-arg APP_NAME="$APP_
 # Tag and push to registry
 docker tag $IMAGE_NAME $REPO_URL/$IMAGE_NAME:$VERSION_TAG
 docker tag $IMAGE_NAME $REPO_URL/$IMAGE_NAME:latest
+echo "Upload initiated at $(TZ=UTC date +'%Y-%m-%d %H:%M:%SZ')"
 docker push $REPO_URL/$IMAGE_NAME:$VERSION_TAG
 docker push $REPO_URL/$IMAGE_NAME:latest
 
 # Restart nodes in cluster so they pull the new image
-kubectl rollout restart deployment $IMAGE_NAME-deployment
-kubectl rollout status deployment $IMAGE_NAME-deployment
+# kubectl rollout restart deployment $IMAGE_NAME-deployment
+# kubectl rollout status deployment $IMAGE_NAME-deployment
+
+# Attempt to print docker logs
+journalctl -xu docker.service
